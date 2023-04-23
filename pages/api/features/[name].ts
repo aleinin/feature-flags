@@ -1,10 +1,23 @@
 import {
+  badRequest,
+  HttpMethod,
+  methodNotAllowed,
+  noContent,
+  notFound,
+  ok,
+} from "@/lib/httpUtil";
+import {
   Feature,
   FeatureNameValidator,
   FeatureValidator,
 } from "@/models/feature";
 import { FeaturesService } from "@/server/featuresService";
 import type { NextApiRequest, NextApiResponse } from "next";
+
+const FEATURE_NAME_MISMATCH =
+  "Feature name in param does not match body feature name";
+
+const BAD_PARAM = "Invalid feature name";
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,41 +27,34 @@ export default async function handler(
   try {
     featureName = FeatureNameValidator.parse(req.query.name);
   } catch (e) {
-    res.status(400).send({ error: "Invalid feature name" });
+    badRequest(res, BAD_PARAM);
     return;
   }
   switch (req.method) {
-    case "GET":
+    case HttpMethod.GET:
       const feature = await FeaturesService.getFeature(featureName);
-      feature ? res.status(200).json(feature) : res.status(404).end();
+      feature ? ok(res, feature) : notFound(res);
       break;
-    case "PUT":
+    case HttpMethod.PUT:
       const updatedFeatureRequest: Feature = FeatureValidator.parse({
         name: req.body.name,
         description: req.body.description,
         onByDefault: req.body.onByDefault,
       });
       if (featureName !== updatedFeatureRequest.name) {
-        res
-          .status(400)
-          .send({
-            error: "Feature name in param does not match body feature name",
-          });
+        badRequest(res, FEATURE_NAME_MISMATCH);
       }
       const updatedFeature = await FeaturesService.updateFeature(
         featureName,
         updatedFeatureRequest
       );
-      updatedFeature
-        ? res.status(200).json(updatedFeature)
-        : res.status(404).end();
+      updatedFeature ? ok(res, updatedFeature) : notFound(res);
       break;
-    case "DELETE":
+    case HttpMethod.DEL:
       const mongoResponse = await FeaturesService.deleteFeature(featureName);
-      mongoResponse.deletedCount > 0 ? res.status(204) : res.status(404);
-      res.end();
+      mongoResponse.deletedCount > 0 ? noContent(res) : notFound(res);
       break;
     default:
-      res.status(405).send({ message: `Method '${req.method}' not allowed` });
+      methodNotAllowed(res, req.method);
   }
 }
