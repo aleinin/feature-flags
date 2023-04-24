@@ -7,24 +7,23 @@ import {
 } from "@/lib/httpUtil";
 import { UserFeature, UserFeatureValidator } from "@/models/userFeature";
 import { UserFeaturesService } from "@/services/userFeaturesService";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
 
-const BAD_PARAM = "Invalid feature name";
-const USER_FEATURE_MISMATCH = "Feature name in param does not match body";
+const BAD_PARAM = "Invalid user name";
+const USER_FEATURE_MISMATCH = "User name in param does not match body";
 
-/* /features/{feature}/users */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const [featureName] = getParams(req, res, ["feature"], BAD_PARAM);
-  if (!featureName) {
+  const [userName] = getParams(req, res, ["user"], BAD_PARAM);
+  if (!userName) {
     return;
   }
   switch (req.method) {
     case HttpMethod.GET:
-      const userFeatures = await UserFeaturesService.getUserFeaturesForFeature(
-        featureName
+      const userFeatures = await UserFeaturesService.getUserFeaturesForUser(
+        userName
       );
       ok(res, userFeatures);
       break;
@@ -33,7 +32,7 @@ export default async function handler(
         const newUserFeatureBody: UserFeature = UserFeatureValidator.parse(
           req.body
         );
-        if (newUserFeatureBody.feature !== featureName) {
+        if (newUserFeatureBody.user !== userName) {
           badRequest(res, USER_FEATURE_MISMATCH);
         } else {
           const newUserFeature = await UserFeaturesService.createUserFeature(

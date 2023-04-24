@@ -2,6 +2,7 @@ import { HttpMethod, methodNotAllowed, ok } from "@/lib/httpUtil";
 import { UsersClient } from "@/services/usersClient";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+/* /users/ */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

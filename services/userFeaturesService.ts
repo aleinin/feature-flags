@@ -21,14 +21,21 @@ GET ONE: 1 service, 2 endpoints
 
 // }
 
+const getUserFeatures = async (
+  field: "user" | "feature",
+  value: string
+): Promise<UserFeature[]> => {
+  await dbConnect();
+  const userFeatureDocuments = await UserFeatureModel.find({ [field]: value });
+  return userFeatureDocuments.map((userFeatureDocument) =>
+    toUserFeature(userFeatureDocument)
+  );
+};
+
 export const UserFeaturesService = {
-  //   getUserFeaturesForUser: async (user: string): Promise<UserFeature[]> => {
-  //     await dbConnect();
-  //     const userFeatureDocuments = await UserFeatureModel.find({ user });
-  //     return userFeatureDocuments.map((userFeatureDocument) =>
-  //       toUserFeature(userFeatureDocument)
-  //     );
-  //   },
+  getUserFeaturesForUser: async (user: string): Promise<UserFeature[]> => {
+    return getUserFeatures("user", user);
+  },
   getUserFeature: async (
     user: string,
     feature: string
@@ -43,11 +50,7 @@ export const UserFeaturesService = {
   getUserFeaturesForFeature: async (
     feature: string
   ): Promise<UserFeature[]> => {
-    await dbConnect();
-    const userFeatureDocuments = await UserFeatureModel.find({ feature });
-    return userFeatureDocuments.map((userFeatureDocument) =>
-      toUserFeature(userFeatureDocument)
-    );
+    return getUserFeatures("feature", feature);
   },
   createUserFeature: async (
     newUserFeature: UserFeature

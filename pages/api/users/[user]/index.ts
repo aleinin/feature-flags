@@ -1,25 +1,22 @@
 import {
-  badRequest,
+  getParams,
   HttpMethod,
   methodNotAllowed,
   notFound,
   ok,
 } from "@/lib/httpUtil";
-import { UserNameValidator } from "@/models/user";
 import { UsersClient } from "@/services/usersClient";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const BAD_PARAM = "Invalid user name";
 
+/* /users/{user} */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  let userName: string;
-  try {
-    userName = UserNameValidator.parse(req.query.name);
-  } catch (e) {
-    badRequest(res, BAD_PARAM);
+  const [userName] = getParams(req, res, ["user"], BAD_PARAM);
+  if (!userName) {
     return;
   }
   switch (req.method) {
