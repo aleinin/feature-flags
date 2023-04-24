@@ -1,4 +1,5 @@
-import { NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from "next";
+import { z } from "zod";
 
 export enum HttpMethod {
   GET = "GET",
@@ -34,4 +35,26 @@ export const badRequest = (res: NextApiResponse, reason?: string) => {
 
 export const ok = <T>(res: NextApiResponse, body: T) => {
   res.status(200).json(body);
+};
+
+const ParamValidator = z.string();
+export const getParams = (
+  req: NextApiRequest,
+  res: NextApiResponse,
+  props: string[],
+  badParamsMessage: string
+): string[] => {
+  let params: string[] = [];
+  props.forEach((prop) => {
+    try {
+      params.push(ParamValidator.parse(req.query[prop]));
+    } catch (e) {
+      params.push("");
+    }
+  });
+  const anyBadParams = params.some((param) => !param);
+  if (anyBadParams) {
+    badRequest(res, badParamsMessage);
+  }
+  return params;
 };

@@ -3,6 +3,7 @@ import { Feature, FeatureValidator } from "@/models/feature";
 import { FeaturesService } from "@/services/featuresService";
 import type { NextApiRequest, NextApiResponse } from "next";
 
+/* /features */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

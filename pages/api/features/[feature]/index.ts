@@ -1,5 +1,6 @@
 import {
   badRequest,
+  getParams,
   HttpMethod,
   methodNotAllowed,
   noContent,
@@ -19,15 +20,13 @@ const FEATURE_NAME_MISMATCH =
 
 const BAD_PARAM = "Invalid feature name";
 
+/* /features/{feature} */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  let featureName: string;
-  try {
-    featureName = FeatureNameValidator.parse(req.query.name);
-  } catch (e) {
-    badRequest(res, BAD_PARAM);
+  const [featureName] = getParams(req, res, ["feature"], BAD_PARAM);
+  if (!featureName) {
     return;
   }
   switch (req.method) {

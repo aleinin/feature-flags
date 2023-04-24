@@ -1,10 +1,11 @@
 import dbConnect from "@/lib/dbConnect";
 import AuditModel, { Audit, AuditEvent, toAudit } from "@/models/audit";
 import { Feature } from "@/models/feature";
+import { UserFeature } from "@/models/userFeature";
 
 interface NewAudit {
-  oldValue: Feature | null;
-  newValue: Feature | null;
+  oldValue: Feature | UserFeature | null;
+  newValue: Feature | UserFeature | null;
   info: string | null;
   event: AuditEvent;
 }
@@ -54,6 +55,43 @@ export const AuditsService = {
       newValue: null,
       info: info ?? null,
       event: AuditEvent.FEATURE_DELETED,
+    };
+    return createAudit(newAudit);
+  },
+  logUserFeatureCreate: async (
+    userFeature: UserFeature,
+    info?: string
+  ): Promise<Audit> => {
+    await dbConnect();
+    const newAudit: NewAudit = {
+      oldValue: null,
+      newValue: userFeature,
+      info: info ?? null,
+      event: AuditEvent.USER_FEATURE_CREATED,
+    };
+    return createAudit(newAudit);
+  },
+  logUserFeatureDelete: async (userFeature: UserFeature, info?: string) => {
+    await dbConnect();
+    const newAudit: NewAudit = {
+      oldValue: userFeature,
+      newValue: null,
+      info: info ?? null,
+      event: AuditEvent.USER_FEATURE_DELETED,
+    };
+    return createAudit(newAudit);
+  },
+  logUserFeatureUpdate: async (
+    originalUserFeature: UserFeature,
+    updatedUserFeature: UserFeature,
+    info?: string
+  ) => {
+    await dbConnect();
+    const newAudit: NewAudit = {
+      oldValue: originalUserFeature,
+      newValue: updatedUserFeature,
+      info: info ?? null,
+      event: AuditEvent.USER_FEATURE_UPDATED,
     };
     return createAudit(newAudit);
   },
