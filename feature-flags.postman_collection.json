@@ -1,0 +1,419 @@
+{
+	"info": {
+		"_postman_id": "d65621a8-ba20-4dff-810b-0f37a7d971c0",
+		"name": "Feature Flags",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Features",
+			"item": [
+				{
+					"name": "UserFeatures",
+					"item": [
+						{
+							"name": "UserFeatures",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/features/test/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"features",
+										"test",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserFeature",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"feature\": \"test\",\r\n    \"user\": \"CodeHive\",\r\n    \"enabled\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/features/test/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"features",
+										"test",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserFeature",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/features/test/users/CodeHive",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"features",
+										"test",
+										"users",
+										"CodeHive"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserFeature",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/features/test/users/CodeHive",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"features",
+										"test",
+										"users",
+										"CodeHive"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserFeature",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user\": \"CodeHive\",\r\n    \"feature\": \"test\",\r\n    \"enabled\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/features/test/users/CodeHive",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"features",
+										"test",
+										"users",
+										"CodeHive"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Features",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/features",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"features"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Feature",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/features/test",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"features",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Feature",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test\",\r\n    \"description\": \"my desc\",\r\n    \"onByDefault\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/features",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"features"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Feature",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test\",\r\n    \"description\": \"my new new desc\",\r\n    \"onByDefault\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/features/test",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"features",
+								"test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Feature",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/features/test",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"features",
+								"test"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "UserFeatures",
+					"item": [
+						{
+							"name": "UserFeatures",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/CodeHive/features",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"CodeHive",
+										"features"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserFeature",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"feature\": \"test3\",\r\n    \"user\": \"CodeHive\",\r\n    \"enabled\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/CodeHive/features",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"CodeHive",
+										"features"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserFeature",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/CodeHive/features/test",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"CodeHive",
+										"features",
+										"test"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserFeature",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"feature\": \"test3\",\r\n    \"user\": \"CodeHive\",\r\n    \"enabled\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/CodeHive/features/test",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"CodeHive",
+										"features",
+										"test"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UserFeature",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/CodeHive/features/test",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"CodeHive",
+										"features",
+										"test"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/CodeHivfe",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"CodeHivfe"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Audits",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/audits",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"audits"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
