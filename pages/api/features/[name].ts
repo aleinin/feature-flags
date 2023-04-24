@@ -11,7 +11,7 @@ import {
   FeatureNameValidator,
   FeatureValidator,
 } from "@/models/feature";
-import { FeaturesService } from "@/server/featuresService";
+import { FeaturesService } from "@/services/featuresService";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const FEATURE_NAME_MISMATCH =
@@ -51,8 +51,8 @@ export default async function handler(
       updatedFeature ? ok(res, updatedFeature) : notFound(res);
       break;
     case HttpMethod.DEL:
-      const mongoResponse = await FeaturesService.deleteFeature(featureName);
-      mongoResponse.deletedCount > 0 ? noContent(res) : notFound(res);
+      const deletedFeature = await FeaturesService.deleteFeature(featureName);
+      deletedFeature ? noContent(res) : notFound(res);
       break;
     default:
       methodNotAllowed(res, req.method);

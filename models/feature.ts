@@ -7,6 +7,14 @@ export interface Feature {
   onByDefault: boolean;
 }
 
+export interface FeatureDocument {
+  _id: string;
+  __v: number;
+  name: string;
+  description: string;
+  onByDefault: boolean;
+}
+
 export const FeatureValidator = z.object({
   name: z.string(),
   description: z.string(),
@@ -14,6 +22,12 @@ export const FeatureValidator = z.object({
 });
 
 export const FeatureNameValidator = z.string();
+
+export const toFeature = (featureDocument: FeatureDocument): Feature => ({
+  name: featureDocument.name,
+  description: featureDocument.description,
+  onByDefault: featureDocument.onByDefault,
+});
 
 const featureSchema = new Schema<Feature>({
   name: {
