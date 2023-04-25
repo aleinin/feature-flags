@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
-import FeatureModel, { Feature, toFeature } from "@/models/feature";
+import { Feature } from "@/models/feature";
+import FeatureModel, { toFeature } from "../documents/features";
 import { AuditsService } from "./auditsService";
 
 export const FeaturesService = {

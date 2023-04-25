@@ -5,14 +5,15 @@ import {
   methodNotAllowed,
   ok,
 } from "@/lib/httpUtil";
-import { UserFeature, UserFeatureValidator } from "@/models/userFeature";
-import { UserFeaturesService } from "@/services/userFeaturesService";
+import { OrgFeature } from "@/models/orgFeature";
+import { OrgFeaturesService } from "@/backend/services/orgFeaturesService";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { OrgFeatureValidator } from "@/backend/documents/orgFeatures";
 
 const BAD_PARAM = "Invalid feature name";
-const USER_FEATURE_MISMATCH = "Feature name in param does not match body";
+const ORG_FEATURE_MISMATCH = "Feature name in param does not match body";
 
-/* /features/{feature}/users */
+/* /features/{feature}/orgs */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -23,23 +24,23 @@ export default async function handler(
   }
   switch (req.method) {
     case HttpMethod.GET:
-      const userFeatures = await UserFeaturesService.getUserFeaturesForFeature(
+      const orgFeatures = await OrgFeaturesService.getOrgFeaturesForFeature(
         featureName
       );
-      ok(res, userFeatures);
+      ok(res, orgFeatures);
       break;
     case HttpMethod.POST:
       try {
-        const newUserFeatureBody: UserFeature = UserFeatureValidator.parse(
+        const newOrgFeatureBody: OrgFeature = OrgFeatureValidator.parse(
           req.body
         );
-        if (newUserFeatureBody.feature !== featureName) {
-          badRequest(res, USER_FEATURE_MISMATCH);
+        if (newOrgFeatureBody.feature !== featureName) {
+          badRequest(res, ORG_FEATURE_MISMATCH);
         } else {
-          const newUserFeature = await UserFeaturesService.createUserFeature(
-            newUserFeatureBody
+          const newOrgFeature = await OrgFeaturesService.createOrgFeature(
+            newOrgFeatureBody
           );
-          ok(res, newUserFeature);
+          ok(res, newOrgFeature);
         }
       } catch (e) {
         badRequest(res);

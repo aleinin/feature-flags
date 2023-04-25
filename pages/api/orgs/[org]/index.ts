@@ -5,24 +5,24 @@ import {
   notFound,
   ok,
 } from "@/lib/httpUtil";
-import { UsersClient } from "@/services/usersClient";
+import { OrgsClient } from "@/backend/services/orgsClient";
 import { NextApiRequest, NextApiResponse } from "next";
 
-const BAD_PARAM = "Invalid user name";
+const BAD_PARAM = "Invalid organization name";
 
-/* /users/{user} */
+/* /orgs/{org} */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const [userName] = getParams(req, res, ["user"], BAD_PARAM);
-  if (!userName) {
+  const [orgName] = getParams(req, res, ["org"], BAD_PARAM);
+  if (!orgName) {
     return;
   }
   switch (req.method) {
     case HttpMethod.GET:
-      const user = await UsersClient.getUser(userName);
-      user ? ok(res, user) : notFound(res);
+      const organization = await OrgsClient.getOrg(orgName);
+      organization ? ok(res, organization) : notFound(res);
       break;
     default:
       methodNotAllowed(res, req.method);

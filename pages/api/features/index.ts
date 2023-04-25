@@ -1,6 +1,6 @@
 import { badRequest, HttpMethod, methodNotAllowed, ok } from "@/lib/httpUtil";
 import { Feature, FeatureValidator } from "@/models/feature";
-import { FeaturesService } from "@/services/featuresService";
+import { FeaturesService } from "@/backend/services/featuresService";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 /* /features */

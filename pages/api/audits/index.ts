@@ -1,5 +1,5 @@
 import { HttpMethod, methodNotAllowed, ok } from "@/lib/httpUtil";
-import { AuditsService } from "@/services/auditsService";
+import { AuditsService } from "@/backend/services/auditsService";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(

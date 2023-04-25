@@ -8,23 +8,22 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 
-const Home = () => {
-  return (
-    <div className="content">
-      <Pogo />
-    </div>
-  );
-};
-
-const Pogo = () => {
+const AuditsPage = () => {
   const [rows, setRows] = useState<Audit[]>([]);
   useEffect(() => {
     fetch("/api/audits")
       .then((response) => response.json())
       .then((audits) => setRows(audits));
   }, []);
+  return <AuditTable rows={rows} />;
+};
+
+interface AuditTableProps {
+  rows: Audit[];
+}
+const AuditTable = ({ rows }: AuditTableProps) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -53,4 +52,4 @@ const Pogo = () => {
   );
 };
 
-export default Home;
+export default AuditsPage;

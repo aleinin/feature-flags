@@ -1,6 +1,6 @@
-import { ExternalUser } from "@/models/user";
+import { ExternalOrganization } from "@/models/organization";
 
-const mockUsers: string[] = [
+const mockOrgs: string[] = [
   "TechNova",
   "Cybrospace",
   "Quantumverse",
@@ -23,9 +23,9 @@ const mockUsers: string[] = [
   "Circuitronix",
 ];
 
-export const mockOrganizations: ExternalUser[] = mockUsers.map(
-  (user, index) => ({
-    name: user,
+export const mockOrganizations: ExternalOrganization[] = mockOrgs.map(
+  (organization, index) => ({
+    name: organization,
     id: index.toString(),
   })
 );

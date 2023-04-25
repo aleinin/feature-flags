@@ -1,10 +1,10 @@
-import userFeatureController from "@/lib/userFeatureController";
+import orgFeatureController from "@/lib/orgFeatureController";
 import { NextApiRequest, NextApiResponse } from "next";
 
-/* /features/{feature}/users/{user} */
+/* /features/{feature}/orgs/{org} */
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  return userFeatureController(req, res);
+  return orgFeatureController(req, res);
 }

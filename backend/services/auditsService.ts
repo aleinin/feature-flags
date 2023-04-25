@@ -1,14 +1,8 @@
 import dbConnect from "@/lib/dbConnect";
-import AuditModel, { Audit, AuditEvent, toAudit } from "@/models/audit";
+import { AuditEvent, Audit } from "@/models/audit";
 import { Feature } from "@/models/feature";
-import { UserFeature } from "@/models/userFeature";
-
-interface NewAudit {
-  oldValue: Feature | UserFeature | null;
-  newValue: Feature | UserFeature | null;
-  info: string | null;
-  event: AuditEvent;
-}
+import { OrgFeature } from "@/models/orgFeature";
+import AuditModel, { NewAudit, toAudit } from "../documents/audits";
 
 const createAudit = async (newAudit: NewAudit) => {
   const auditDocument = await AuditModel.create(newAudit);
@@ -58,40 +52,40 @@ export const AuditsService = {
     };
     return createAudit(newAudit);
   },
-  logUserFeatureCreate: async (
-    userFeature: UserFeature,
+  logOrgFeatureCreate: async (
+    orgFeature: OrgFeature,
     info?: string
   ): Promise<Audit> => {
     await dbConnect();
     const newAudit: NewAudit = {
       oldValue: null,
-      newValue: userFeature,
+      newValue: orgFeature,
       info: info ?? null,
-      event: AuditEvent.USER_FEATURE_CREATED,
+      event: AuditEvent.ORG_FEATURE_CREATED,
     };
     return createAudit(newAudit);
   },
-  logUserFeatureDelete: async (userFeature: UserFeature, info?: string) => {
+  logOrgFeatureDelete: async (orgFeature: OrgFeature, info?: string) => {
     await dbConnect();
     const newAudit: NewAudit = {
-      oldValue: userFeature,
+      oldValue: orgFeature,
       newValue: null,
       info: info ?? null,
-      event: AuditEvent.USER_FEATURE_DELETED,
+      event: AuditEvent.ORG_FEATURE_DELETED,
     };
     return createAudit(newAudit);
   },
-  logUserFeatureUpdate: async (
-    originalUserFeature: UserFeature,
-    updatedUserFeature: UserFeature,
+  logOrgFeatureUpdate: async (
+    originalOrgFeature: OrgFeature,
+    updatedOrgFeature: OrgFeature,
     info?: string
   ) => {
     await dbConnect();
     const newAudit: NewAudit = {
-      oldValue: originalUserFeature,
-      newValue: updatedUserFeature,
+      oldValue: originalOrgFeature,
+      newValue: updatedOrgFeature,
       info: info ?? null,
-      event: AuditEvent.USER_FEATURE_UPDATED,
+      event: AuditEvent.ORG_FEATURE_UPDATED,
     };
     return createAudit(newAudit);
   },
