@@ -1,7 +1,8 @@
 import { badRequest, HttpMethod, methodNotAllowed, ok } from "@/lib/httpUtil";
-import { Feature, FeatureValidator } from "@/models/feature";
+import { Feature } from "@/models/feature";
 import { FeaturesService } from "@/backend/services/featuresService";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { FeatureValidator } from "@/backend/documents/features";
 
 /* /features */
 export default async function handler(
@@ -15,11 +16,7 @@ export default async function handler(
       break;
     case HttpMethod.POST:
       try {
-        const newFeatureBody: Feature = FeatureValidator.parse({
-          name: req.body.name,
-          description: req.body.description,
-          onByDefault: req.body.onByDefault,
-        });
+        const newFeatureBody: Feature = FeatureValidator.parse(req.body);
         const newFeature = await FeaturesService.createFeature(newFeatureBody);
         ok(res, newFeature);
       } catch (e) {

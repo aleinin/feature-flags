@@ -1,13 +1,4 @@
 import { Audit, AuditEventStringMap } from "@/models/audit";
-import {
-  TableContainer,
-  Paper,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-} from "@mui/material";
 import { useState, useEffect } from "react";
 
 const AuditsPage = () => {
@@ -17,39 +8,20 @@ const AuditsPage = () => {
       .then((response) => response.json())
       .then((audits) => setRows(audits));
   }, []);
-  return <AuditTable rows={rows} />;
+  const tableRows = rows.map((row) => ({
+    id: row.id,
+    date: row.createdAt.toString(),
+    event: AuditEventStringMap[row.event],
+    info: row.info,
+  }));
+  return <AuditTable rows={tableRows} />;
 };
 
 interface AuditTableProps {
-  rows: Audit[];
+  rows: any[];
 }
 const AuditTable = ({ rows }: AuditTableProps) => {
-  return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Event</TableCell>
-            <TableCell>Change</TableCell>
-            <TableCell>Info</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.createdAt.toString()}
-              </TableCell>
-              <TableCell>{AuditEventStringMap[row.event]}</TableCell>
-              <TableCell>{"todo"}</TableCell>
-              <TableCell>{row.info}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
+  return <h1> todo </h1>;
 };
 
 export default AuditsPage;
